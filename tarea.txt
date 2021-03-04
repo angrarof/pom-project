@@ -1,0 +1,12 @@
+Tarea:
+-Seguir creando test cases sobre el sitio de steam, los flujos que quieran (login, create account, navigate, etc), el chiste es tener una mayor cantidad de @tests
+-Anadir el maven-surefire-plugin al pom
+-Agrupar sus pruebas
+
+NOTA:
+comando para correr pruebas desde terminal
+
+mvn test
+mvn test -Dtest=JAVACLASS
+mvn test -Dtest=JAVACLASS#METHODNAME
+mvn test -Dgroups=GROUPNAME
