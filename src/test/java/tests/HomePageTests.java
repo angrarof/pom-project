@@ -7,8 +7,8 @@ import org.testng.annotations.BeforeTest;
 import pages.HomePage;
 import settings.BaseTest;
 import components.NavBar;
-
-import java.util.ArrayList;
+import settings.ScreenshotMethods;
+import java.util.List;
 
 public class HomePageTests extends BaseTest {
 
@@ -21,17 +21,22 @@ public class HomePageTests extends BaseTest {
         homePage = new HomePage(driver);
     }
 
-    @Test(enabled = false)
-    public void openAllNavBarTabs(){
+    @Test(enabled = true)
+    public void openAllNavBarTabs() throws Exception {
+
         navBar.openYourStoreTab();
+        ScreenshotMethods.takeScreenshot(driver);
         navBar.openGamesTab();
+        ScreenshotMethods.takeScreenshot(driver);
     }
 
-    @Test(enabled = false)
-    public void testSuggestedGames(){
+    @Test(enabled=true)
+    public void testSuggestedGames() throws Exception {
         String game_name = "Portal";
         navBar.writeGameIntoSearchInput(game_name);
-        ArrayList<String> games = navBar.getSuggestedGames();
+        List<String> games = navBar.getSuggestedGames();
+        ScreenshotMethods.takeScreenshot(driver);
+
         Assert.assertTrue(games.size() == 5, "The number of suggested games is not correct");
         for(String game: games){
             Assert.assertTrue(game.indexOf("Portal") >= 0, "The game " + game + " is not correct. Not contains Search String " + game_name);

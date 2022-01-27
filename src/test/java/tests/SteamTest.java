@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import pages.GamePage;
 import settings.BaseTest;
 import settings.ScreenshotMethods;
+import settings.Utils;
 
 public class SteamTest extends BaseTest {
 
@@ -26,6 +27,7 @@ public class SteamTest extends BaseTest {
     public void validateSuggestedGames() throws Exception{
         gameToSearch = "slug";
         navigationBar.writeTextOnSearchInput(gameToSearch);
+        Utils.highlightElement(driver,navigationBar.getSearchInput(),true);
         int foundedGames = navigationBar.getSuggestedGames().size();
         Assert.assertTrue(foundedGames>=4,"There number of displayed games is less than 4");
         System.out.println("There are "+foundedGames+" displayed games");
@@ -34,7 +36,6 @@ public class SteamTest extends BaseTest {
             Assert.assertTrue(game.toLowerCase().contains(gameToSearch),"Suggested games does not contains expected word");
             System.out.println(game+" contain the word "+gameToSearch);
         }
-
         ScreenshotMethods.takeScreenshot(driver);
     }
 

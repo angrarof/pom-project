@@ -17,6 +17,10 @@ public class NavigationBar extends BasePage {
     @FindBy(css = ".match_name")
     private List<WebElement> suggestedGames;
 
+    public WebElement getSearchInput() {
+        return searchInput;
+    }
+
     public void writeTextOnSearchInput(String text){
         enterText(searchInput,text);
     }

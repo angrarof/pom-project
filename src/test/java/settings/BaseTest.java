@@ -1,10 +1,10 @@
 package settings;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.BeforeStep;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 
 public class BaseTest {
@@ -18,8 +18,13 @@ public class BaseTest {
 
     }
 
+    @BeforeClass
+    public void beforeEachClass() throws Exception{
+        ScreenshotMethods.createTestFolder("Scenario Name");
+    }
+
     @BeforeMethod
-    public void beforeEachMethod() throws Exception{
+    public void beforeEachMethod() throws Exception {
         ScreenshotMethods.screenshotSetup();
     }
 
@@ -27,7 +32,6 @@ public class BaseTest {
     public void afterEachMethod()throws Exception{
         ScreenshotMethods.screenshotTearDown();
     }
-
 
     @AfterSuite
     public void suiteTearDown(){

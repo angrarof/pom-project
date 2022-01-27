@@ -1,7 +1,6 @@
 package settings;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Image;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -17,23 +16,25 @@ import java.util.Date;
 
 abstract public class ScreenshotMethods {
     private static Document document;
+    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
     private static final String reportsFolder="TestResults";
     private static String testResultFolder, screenshotNameWithPath;
 
-    public static void screenshotSetup() throws Exception{
-        document = new Document();
-
+    public static void createTestFolder(String scenarioName){
         File reportFolderFile = new File(reportsFolder);
         if (!reportFolderFile.exists()){
             reportFolderFile.mkdir();
         }
 
-        testResultFolder = reportsFolder+"/"+ getTimeStampWithoutYear();
+        testResultFolder = reportsFolder+"/"+ scenarioName + " " + getTimeStampWithoutYear();
         File testResultFile = new File(testResultFolder);
         if (!testResultFile.exists()){
             testResultFile.mkdir();
         }
+    }
 
+    public static void screenshotSetup() throws Exception{
+        document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(testResultFolder+"/"+ getTimeStampWithoutYear()+".pdf"));
         document.open();
     }
@@ -55,6 +56,7 @@ abstract public class ScreenshotMethods {
     }
 
     public static void takeScreenshot(WebDriver driver) throws Exception{
+        System.out.println("Taking screenshot");
         //Create screenshot
         File source = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         screenshotNameWithPath = testResultFolder+"/"+ getTimeStampWithoutYear()+".png";
@@ -64,10 +66,17 @@ abstract public class ScreenshotMethods {
         Image screenshot = Image.getInstance(screenshotNameWithPath);
         screenshot.scalePercent(100f,70f);
         screenshot.scaleToFit(500,600);
+        document.add(new Paragraph("MY SCENARIO TITLE",catFont));
+        document.add(new Paragraph(" "));
+        document.add(new Paragraph("My test"));
         document.add(screenshot);
         document.newPage();
 
         //Delete screenshot
         Files.deleteIfExists(Paths.get(System.getProperty("user.dir") +"/"+screenshotNameWithPath));
+    }
+
+    public static void addLogger(String my_log) throws DocumentException {
+        document.add(new Paragraph(my_log));
     }
 }

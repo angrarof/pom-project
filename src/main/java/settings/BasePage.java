@@ -10,6 +10,8 @@ import org.testng.Assert;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static org.testng.AssertJUnit.assertTrue;
+
 abstract public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
@@ -65,6 +67,7 @@ abstract public class BasePage {
     }
 
     public void hoverElement(WebElement element){
+        assertTrue(true);
         this.waitElementToAppear(element);
         actions.moveToElement(element).perform();
     }
